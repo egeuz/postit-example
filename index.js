@@ -18,14 +18,14 @@ app.use(express.static('public'));
 
 /*** SETTING UP SOCKET.IO ***/
 io.on("connection", function(socket) {
-
   //when any user submits a new post-it...
-  socket.on("new post-it", function (postItText) {
+  socket.on("new post-it", function (postItText, id) {
     //take the post-it text received and broadcast it everywhere else
-    socket.broadcast.emit("new post-it", postItText)
-    //other things you could do here:
-    //validate/sanitize the text
-    //associate it with a username
-    //the world's your oyster
+    socket.broadcast.emit("new post-it", postItText, id)
+  })
+
+  socket.on("edit post-it", function (postItText, id) {
+    //take the post-it text received and broadcast it everywhere else
+    socket.broadcast.emit("edit post-it", postItText, id)
   })
 })
